@@ -10,14 +10,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.senac.teladenovaviagem.components.MyTopBar
@@ -73,6 +73,53 @@ fun Myapp(){
                         .padding(top = 10.dp)
                 )
             }
+
+            Row {
+                Text(
+                    text = "Tipo",
+                    fontSize = 22.sp,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(top = 10.dp)
+                )
+            }
+
+            Row (
+                verticalAlignment = Alignment.CenterVertically
+            ){
+
+                RadioButton(
+                    selected = true,
+                    onClick = {},
+                    modifier = Modifier
+                        .weight(0.5f)
+                )
+
+                Text(
+                    text = "Lazer",
+                    fontSize = 22.sp,
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier
+                        .weight(1.5f)
+                )
+
+                RadioButton(
+                    selected = true,
+                    onClick = {},
+                    modifier = Modifier
+                        .weight(0.5f)
+                )
+
+                Text(
+                    text = "Negócios",
+                    fontSize = 22.sp,
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier
+                        .weight(1.5f)
+
+                )
+            }
+
         }
 
     }
