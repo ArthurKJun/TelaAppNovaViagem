@@ -1,7 +1,5 @@
 package com.senac.teladenovaviagem
 
-import android.app.DatePickerDialog
-import android.icu.util.GregorianCalendar
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,7 +18,6 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -64,14 +61,23 @@ fun Myapp() {
         }
     ) {
 
-        var showDatePickerDialog = remember {
+        var showDatePickerDialogInicio = remember {
             mutableStateOf(false)
         }
-        var selectedDate = remember {
+        var selectedDateInicio = remember {
             mutableStateOf("")
         }
 
-        val datePickerState = rememberDatePickerState()
+        val datePickerStateInicio = rememberDatePickerState()
+
+        var showDatePickerDialogFinal = remember {
+            mutableStateOf(false)
+        }
+        var selectedDateFinal = remember {
+            mutableStateOf("")
+        }
+
+        val datePickerStateFinal = rememberDatePickerState()
 
         Column(
             modifier = Modifier
@@ -114,7 +120,7 @@ fun Myapp() {
             ) {
 
                 RadioButton(
-                    selected = true,
+                    selected = false,
                     onClick = {},
                     modifier = Modifier
                         .weight(0.5f)
@@ -159,39 +165,129 @@ fun Myapp() {
 
             Row {
 
-                if (showDatePickerDialog.value) {
+                if (showDatePickerDialogInicio.value) {
                     DatePickerDialog(
-                        onDismissRequest = { showDatePickerDialog.value = false },
+                        onDismissRequest = { showDatePickerDialogInicio.value = false },
                         confirmButton = {
                             Button(
                                 onClick = {
-                                    datePickerState
+                                    datePickerStateInicio
                                         .selectedDateMillis?.let { millis ->
-                                            selectedDate.value = millis.toBrazilianDateFormat()
+                                            selectedDateInicio.value = millis.toBrazilianDateFormat()
                                         }
-                                    showDatePickerDialog.value = false
+                                    showDatePickerDialogInicio.value = false
                                 }) {
                                 Text(text = "Escolher data")
                             }
-                        }) {
-                        DatePicker(state = datePickerState)
+                        },
+                        modifier = Modifier
+                            .weight(4f)
+                        ) {
+                        DatePicker(state = datePickerStateInicio)
                     }
                 }
 
                 OutlinedTextField(
-                    value = selectedDate.value,
+                    value = selectedDateInicio.value,
                     onValueChange = { },
                     modifier = Modifier
                         .padding(8.dp)
                         .fillMaxWidth()
                         .onFocusChanged {
                             if (it.isFocused) {
-                                showDatePickerDialog.value = true
+                                showDatePickerDialogInicio.value = true
                             }
                         },
                     readOnly = true
                 )
 
+            }
+
+            Row {
+
+                Text(
+                    text = "Data Final",
+                    fontSize = 22.sp,
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier
+                        .weight(1.5f)
+                        .padding(top = 16.dp)
+                )
+            }
+
+            Row {
+
+                if (showDatePickerDialogFinal.value) {
+                    DatePickerDialog(
+                        onDismissRequest = { showDatePickerDialogFinal.value = false },
+                        confirmButton = {
+                            Button(
+                                onClick = {
+                                    datePickerStateFinal
+                                        .selectedDateMillis?.let { millis ->
+                                            selectedDateFinal.value = millis.toBrazilianDateFormat()
+                                        }
+                                    showDatePickerDialogFinal.value = false
+                                }) {
+                                Text(text = "Escolher data")
+                            }
+                        },
+                        modifier = Modifier
+                            .weight(4f)
+                    ) {
+                        DatePicker(state = datePickerStateFinal)
+                    }
+                }
+
+                OutlinedTextField(
+                    value = selectedDateFinal.value,
+                    onValueChange = { },
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth()
+                        .onFocusChanged {
+                            if (it.isFocused) {
+                                showDatePickerDialogFinal.value = true
+                            }
+                        },
+                    readOnly = true
+                )
+
+            }
+
+            Row {
+
+                Text(
+                    text = "Orçamento",
+                    fontSize = 22.sp,
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier
+                        .weight(1.5f)
+                        .padding(top = 16.dp)
+                )
+            }
+
+            Row {
+                OutlinedTextField(
+                    value = "",
+                    onValueChange = {},
+                    modifier = Modifier
+                        .weight(4f)
+                        .padding(top = 10.dp)
+                )
+            }
+            
+            Row (
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Button(
+                    onClick = {  },
+                    modifier = Modifier
+                        .padding(top = 35.dp)
+                        .weight(2f)
+                ){   
+                    Text(text = "Salvar")
+                }
             }
 
         }
